@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Feud Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+        }
+        .question-container {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .answers {
+            list-style-type: none;
+            padding: 0;
+        }
+        .answer {
+            margin: 10px;
+            padding: 15px;
+            background-color: #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .answer:hover {
+            background-color: #bbb;
+        }
+        .reveal {
+            background-color: #4CAF50;
+            color: white;
+            cursor: default;
+        }
+        .next-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .next-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Family Feud Game</h1>
+</header>
+
+<div class="question-container">
+    <h2 id="question">What is something people do when they wake up?</h2>
+    <ul class="answers" id="answers">
+        <li class="answer" onclick="revealAnswer(this, 'Brush teeth', 35)">Answer 1</li>
+        <li class="answer" onclick="revealAnswer(this, 'Drink coffee', 25)">Answer 2</li>
+        <li class="answer" onclick="revealAnswer(this, 'Check phone', 20)">Answer 3</li>
+        <li class="answer" onclick="revealAnswer(this, 'Exercise', 10)">Answer 4</li>
+    </ul>
+    <button class="next-button" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "What is something people do when they wake up?",
+            answers: [
+                { text: "Brush teeth", points: 35 },
+                { text: "Drink coffee", points: 25 },
+                { text: "Check phone", points: 20 },
+                { text: "Exercise", points: 10 }
+            ]
+        },
+        {
+            question: "Name something you take on a camping trip.",
+            answers: [
+                { text: "Tent", points: 40 },
+                { text: "Sleeping bag", points: 30 },
+                { text: "Flashlight", points: 20 },
+                { text: "Food", points: 10 }
+            ]
+        },
+        {
+            question: "What is a popular holiday destination?",
+            answers: [
+                { text: "Beach", points: 50 },
+                { text: "Mountains", points: 30 },
+                { text: "City", points: 15 },
+                { text: "Countryside", points: 5 }
+            ]
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function revealAnswer(element, text, points) {
+        if (!element.classList.contains('reveal')) {
+            element.textContent = `${text} (${points} points)`;
+            element.classList.add('reveal');
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById('question').textContent = currentQuestion.question;
+            const answersContainer = document.getElementById('answers');
+            answersContainer.innerHTML = '';
+            currentQuestion.answers.forEach((answer, index) => {
+                const li = document.createElement('li');
+                li.className = 'answer';
+                li.textContent = `Answer ${index + 1}`;
+                li.setAttribute('onclick', `revealAnswer(this, '${answer.text}', ${answer.points})`);
+                answersContainer.appendChild(li);
+            });
+        } else {
+            document.querySelector('.question-container').innerHTML = '<h2>Game Over! Thanks for playing.</h2>';
+        }
+    }
+</script>
+
+</body>
+</html>
