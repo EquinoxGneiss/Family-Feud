@@ -58,6 +58,20 @@
         .next-button:hover {
             background-color: #45a049;
         }
+        .wrong-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .wrong-button:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 <body>
@@ -80,11 +94,19 @@
         <li class="answer" onclick="playClickSound(this, 'Forgot something', 5)">Answer 4</li>
         <li class="answer" onclick="playClickSound(this, 'Bad Weather', 5)">Answer 5</li>
     </ul>
-    <button class="next-button" onclick="nextQuestion()">Next Question</button>
+    <div>
+        <button class="wrong-button" onclick="playWrongSound()">Wrong</button>
+        <button class="next-button" onclick="nextQuestion()">Next Question</button>
+    </div>
 </div>
 
-<audio id="click-sound">
-    <source src="click-sound.mp3" type="audio/mpeg">
+<audio id="correct">
+    <source src="correct.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<audio id="wrong-sound">
+    <source src="wrong-sound.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
 
@@ -135,7 +157,7 @@
     let currentQuestionIndex = 0;
 
     function playClickSound(element, text, points) {
-        const clickSound = document.getElementById('click-sound');
+        const clickSound = document.getElementById('correct');
         clickSound.play();
         setTimeout(() => {
             revealAnswer(element, text, points);
@@ -166,6 +188,12 @@
         } else {
             document.querySelector('.question-container').innerHTML = '<h2>Game Over! Thanks for playing.</h2>';
         }
+    }
+
+    function playWrongSound() {
+        const wrongSound = document.getElementById('wrong-sound');
+        wrongSound.play();
+        alert('Oops! That’s not the right answer.');
     }
 </script>
 
