@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
+            background-image: url(bg.png);
             margin: 0;
             padding: 0;
         }
@@ -66,49 +66,81 @@
     <h1>Family Feud Game</h1>
 </header>
 
+<audio id="background-audio" loop autoplay>
+    <source src="background-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
 <div class="question-container">
     <h2 id="question">What is something people do when they wake up?</h2>
     <ul class="answers" id="answers">
-        <li class="answer" onclick="revealAnswer(this, 'Brush teeth', 35)">Answer 1</li>
-        <li class="answer" onclick="revealAnswer(this, 'Drink coffee', 25)">Answer 2</li>
-        <li class="answer" onclick="revealAnswer(this, 'Check phone', 20)">Answer 3</li>
-        <li class="answer" onclick="revealAnswer(this, 'Exercise', 10)">Answer 4</li>
+        <li class="answer" onclick="playClickSound(this, 'Traffic', 50)">Answer 1</li>
+        <li class="answer" onclick="playClickSound(this, 'Woke up late', 30)">Answer 2</li>
+        <li class="answer" onclick="playClickSound(this, 'No transportation', 10)">Answer 3</li>
+        <li class="answer" onclick="playClickSound(this, 'Forgot something', 5)">Answer 4</li>
+        <li class="answer" onclick="playClickSound(this, 'Bad Weather', 5)">Answer 5</li>
     </ul>
     <button class="next-button" onclick="nextQuestion()">Next Question</button>
 </div>
 
+<audio id="click-sound">
+    <source src="click-sound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
 <script>
     const questions = [
         {
-            question: "What is something people do when they wake up?",
+            question: "Aside from work, what reasons do people have for being late?",
             answers: [
-                { text: "Brush teeth", points: 35 },
-                { text: "Drink coffee", points: 25 },
-                { text: "Check phone", points: 20 },
-                { text: "Exercise", points: 10 }
+                { text: "Traffic", points: 50 },
+                { text: "Woke up late", points: 30 },
+                { text: "No transportation", points: 10 },
+                { text: "Forgot something", points: 5 },
+                { text: "Bad weather", points: 5 }
             ]
         },
         {
-            question: "Name something you take on a camping trip.",
+            question: "What do people buy first when they receive their salary?",
             answers: [
-                { text: "Tent", points: 40 },
-                { text: "Sleeping bag", points: 30 },
-                { text: "Flashlight", points: 20 },
-                { text: "Food", points: 10 }
+                { text: "Food/Groceries", points: 50 },
+                { text: "Bills payment", points: 30 },
+                { text: "Clothes", points: 10 },
+                { text: "Cellphone load", points: 5 },
+                { text: "Coffee/Milk Tea", points: 5 }
             ]
         },
         {
-            question: "What is a popular holiday destination?",
+            question: "What is the first thing people look for on the table during Noche Buena?",
             answers: [
-                { text: "Beach", points: 50 },
-                { text: "Mountains", points: 30 },
-                { text: "City", points: 15 },
-                { text: "Countryside", points: 5 }
+                { text: "Lechon", points: 40 },
+                { text: "Ham", points: 25 },
+                { text: "Queso de Bola", points: 15 },
+                { text: "Spaghetti", points: 10 },
+                { text: "Fruit Salad", points: 10 }
+            ]
+        },
+        {
+            question: "What do aunties always ask during family reunions?",
+            answers: [
+                { text: "May boyfriend/girlfriend ka na ba?", points: 30 },
+                { text: "Kailan ka mag-aasawa?", points: 25 },
+                { text: "Kumusta ang trabaho mo?", points: 20 },
+                { text: "Kailan ang graduation?", points: 15 },
+                { text: "Ilang taon ka na?", points: 10 }
             ]
         }
     ];
 
     let currentQuestionIndex = 0;
+
+    function playClickSound(element, text, points) {
+        const clickSound = document.getElementById('click-sound');
+        clickSound.play();
+        setTimeout(() => {
+            revealAnswer(element, text, points);
+        }, 1000); // Delay of 1 second before revealing the answer
+    }
 
     function revealAnswer(element, text, points) {
         if (!element.classList.contains('reveal')) {
@@ -128,7 +160,7 @@
                 const li = document.createElement('li');
                 li.className = 'answer';
                 li.textContent = `Answer ${index + 1}`;
-                li.setAttribute('onclick', `revealAnswer(this, '${answer.text}', ${answer.points})`);
+                li.setAttribute('onclick', `playClickSound(this, '${answer.text}', ${answer.points})`);
                 answersContainer.appendChild(li);
             });
         } else {
