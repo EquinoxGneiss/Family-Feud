@@ -86,7 +86,8 @@
 </audio>
 
 <div class="question-container">
-    <h2 id="question">What is something people do when they wake up?</h2>
+    <h2 id="question">Aside from work, what reasons do people have for being late?</h2>
+    <h3 id="sub-question">Bukod sa trabaho, ano ang mga dahilan kung bakit nahuhuli ang mga tao?</h3>
     <ul class="answers" id="answers">
         <li class="answer" onclick="playClickSound(this, 'Traffic', 50)">Answer 1</li>
         <li class="answer" onclick="playClickSound(this, 'Woke up late', 30)">Answer 2</li>
@@ -114,6 +115,7 @@
     const questions = [
         {
             question: "Aside from work, what reasons do people have for being late?",
+            translation: "Bukod sa trabaho, ano ang mga dahilan kung bakit nahuhuli ang mga tao?",
             answers: [
                 { text: "Traffic", points: 50 },
                 { text: "Woke up late", points: 30 },
@@ -124,6 +126,7 @@
         },
         {
             question: "What do people buy first when they receive their salary?",
+            translation: "Ano ang unang binibili ng tao kapag sumahod?",
             answers: [
                 { text: "Food/Groceries", points: 50 },
                 { text: "Bills payment", points: 30 },
@@ -134,6 +137,7 @@
         },
         {
             question: "What is the first thing people look for on the table during Noche Buena?",
+            translation: "Anong karaniwan hinahanap sa lamesa tuwing Noche Buena?",
             answers: [
                 { text: "Lechon", points: 40 },
                 { text: "Ham", points: 25 },
@@ -144,6 +148,7 @@
         },
         {
             question: "What do aunties always ask during family reunions?",
+            translation: "Anong tanong ang laging tinatanong ng mga tita tuwing reunion?",
             answers: [
                 { text: "May boyfriend/girlfriend ka na ba?", points: 30 },
                 { text: "Kailan ka mag-aasawa?", points: 25 },
@@ -157,11 +162,11 @@
     let currentQuestionIndex = 0;
 
     function playClickSound(element, text, points) {
-        const clickSound = document.getElementById('correct');
-        clickSound.play();
         setTimeout(() => {
+            const clickSound = document.getElementById('correct');
+            clickSound.play();
             revealAnswer(element, text, points);
-        }, 1000); // Delay of 1 second before revealing the answer
+        }, 1000); // Delay the audio and answer reveal by 1 second
     }
 
     function revealAnswer(element, text, points) {
@@ -176,6 +181,7 @@
         if (currentQuestionIndex < questions.length) {
             const currentQuestion = questions[currentQuestionIndex];
             document.getElementById('question').textContent = currentQuestion.question;
+            document.getElementById('sub-question').textContent = currentQuestion.translation;
             const answersContainer = document.getElementById('answers');
             answersContainer.innerHTML = '';
             currentQuestion.answers.forEach((answer, index) => {
